@@ -12,7 +12,7 @@ app.use(router);
 async function startServer() {
     try {
         await sequelize.sync({ alter: true });
-        console.log(" Tabela 'Users' e banco de dados SQLite sincronizados com sucesso!");
+        console.log("Banco de dados SQLite sincronizados com sucesso!");
 
         app.listen(port, () => {
             console.log(` Servidor rodando na porta ${port}`);
@@ -24,6 +24,3 @@ async function startServer() {
 
 startServer();
 
-app.listen(port, () => {
-  console.log(`Serviço executando em http://localhost:${port}`);
-});

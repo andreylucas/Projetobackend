@@ -15,10 +15,10 @@ const getCatByID = async (req, res) => {
 
 
 const createCat = async (req, res) => {
-    const user = req.body;
+    const cat = req.body;
 
     try {
-        const catDB = await Categories.create(user);
+        const catDB = await Categories.create(cat);
         res.status(201).json({ success: true, data: catDB }); 
     } catch (error) {
            res.status(400).json({ 
@@ -32,8 +32,8 @@ const alterCat = async (req, res) => {
     const newData = req.body
 
     try {
-        const userDB = await Categories.update(newData, { where: { id: id } });
-        res.status(201).json({ success: true, data: userDB });
+        const catDB = await Categories.update(newData, { where: { id: id } });
+        res.status(201).json({ success: true, data: catDB });
     } catch (error) {
         res.status(400).json({ 
             success: false, data: { message: error.message}  })
@@ -44,8 +44,8 @@ const deleteCat = async (req, res) => {
     const { id } = req.params
 
     try {
-        const userDB = await Categories.destroy({ where: { id: id } });
-         res.status(201).json({ success: true, data: userDB });
+        const catDB = await Categories.destroy({ where: { id: id } });
+         res.status(201).json({ success: true, data: catDB });
     } catch (error) {
        res.status(400).json({ 
             success: false, data: { message: error.message} })
@@ -57,8 +57,8 @@ const getCatAll = async (req, res) => {
     console.log(res.locals);
     
     try {
-        const userDB = await Categories.findAll();
-         res.status(201).json({ success: true, data: userDB });
+        const catDB = await Categories.findAll();
+         res.status(201).json({ success: true, data: catDB });
     } catch (error) {
        res.status(400).json({ 
             success: false, data: { message: error.message}  })
