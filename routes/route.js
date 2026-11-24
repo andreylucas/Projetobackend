@@ -1,5 +1,5 @@
 import express from 'express';
-import { getByID, alterUser, createUser, deleteUser, getAll} from '../repositories/userRepositories.js';
+import { getByID, alterUser, createUser, deleteUser, getAll, Token} from '../repositories/userRepositories.js';
 import { alterCat, createCat, deleteCat, getCatByID, getCatAll } from '../repositories/catRepositories.js';
 import { alterProd, createProd, deleteProd, getProdAll, getProdByID } from '../repositories/prodRepositories.js';
 
@@ -7,6 +7,7 @@ import { alterProd, createProd, deleteProd, getProdAll, getProdByID } from '../r
 
 const router = express.Router();
 
+router.route("/v1/user/token").post(Token);
 router.route("/v1/user").post(createUser).get(getAll);
 router.route("/v1/user/:id").get(getByID).put(alterUser).delete(deleteUser);
 

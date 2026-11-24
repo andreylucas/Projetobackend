@@ -70,7 +70,49 @@ const getAll = async (req, res) => {
     }
 }
 
+const Token = async (req, res) => {
+    const { email, password } = req.body;
+   
 
+    if (!req.is("application/json") || !email || !password) {
+        return res.status(400).json({ 
+            message: "Dados da requisição incorretos" 
+        });
+    }
+
+    try {
+        const userDB = await User.findOne({ where: { email: email } });
+        if (!userDB) {
+            return res.status(400).json({ 
+                message: "Email ou senha incorretos" 
+            });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, userDB.password);
+
+        if (!isPasswordValid) {
+            return res.status(400).json({ 
+                message: "Email ou senha incorretos" 
+            });
+        }
+
+        const token = jwt.sign(
+            { id: userDB.id, email: userDB.email },
+            process.env.JWT_SECRET || "sua_chave_secreta",
+            { expiresIn: "1h" }
+        );
+
+        return res.status(200).json({
+            token: token
+        });
+
+    } catch (error) {
+        return res.status(400).json({ 
+            message: error.message 
+        });
+    }
+
+}
 
 export {
     createUser,
@@ -78,4 +120,5 @@ export {
     getByID,
     alterUser,
     deleteUser,
+    Token
 }
